@@ -1,6 +1,6 @@
-import FilterSlider from "./filterSlider";
 import { useCssStore } from "../../store/css";
 import { getFilterString, getStyleObject } from "../../utils/utils";
+import FilterSlider from "./FilterSlider";
 
 type CssContainerProps = {
   image: string;

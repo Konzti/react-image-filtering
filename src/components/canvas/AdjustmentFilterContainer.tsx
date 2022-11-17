@@ -1,5 +1,5 @@
 import { useCanvasStore } from "../../store/canvas";
-import AdjustmentFilterSlider from "./adjustmentFilterSlider";
+import AdjustmentFilterSlider from "./AdjustmentFilterSlider";
 
 const AdjustmentFilterContainer = () => {
   const filters = useCanvasStore(state => state.filters);

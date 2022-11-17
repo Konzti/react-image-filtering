@@ -5,8 +5,8 @@ import { AdjustmentFilter } from "@pixi/filter-adjustment";
 import { createApp, createScene } from "./scene/setup";
 import { useCanvasStore } from "../../store/canvas";
 import { getAdjustmentFilterObject } from "../../utils/utils";
-import AdjustmentFilterContainer from "./adjustmentFilterContainer";
-import Buttons from "./buttons";
+import AdjustmentFilterContainer from "./AdjustmentFilterContainer";
+import Buttons from "./Buttons";
 
 type CanvasContainerProps = {
   image: string;
