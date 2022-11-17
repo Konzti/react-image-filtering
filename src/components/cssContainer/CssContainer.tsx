@@ -1,4 +1,4 @@
-import FilterSlider from "./FilterSlider";
+import FilterSlider from "./filterSlider";
 import { useCssStore } from "../../store/css";
 import { getFilterString, getStyleObject } from "../../utils/utils";
 

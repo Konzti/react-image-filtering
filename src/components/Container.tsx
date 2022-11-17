@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 
 import { ContainerType } from "../types";
 import { DEFAULT_IMG, DEFAULT_RATIO, DEFAULT_CONTAINER } from "../constants/constants";
-import Upload from "./Upload";
-import CssContainer from "./cssContainer/CssContainer";
-import CanvasContainer from "./canvas/CanvasContainer";
+import Upload from "./upload";
+import CssContainer from "./cssContainer/cssContainer";
+import CanvasContainer from "./canvas/canvasContainer";
 
 const Container = () => {
   const [container, setContainer] = useState<ContainerType>(DEFAULT_CONTAINER);
