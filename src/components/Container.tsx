@@ -1,22 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { ContainerType } from "../types";
-import { DEFAULT_IMG, DEFAULT_RATIO, DEFAULT_CONTAINER } from "../constants/constants";
+import { ContainerType, ImageSizeType } from "../types";
+import { DEFAULT_IMG, DEFAULT_CONTAINER } from "../constants/constants";
 import CssContainer from "./cssContainer/CssContainer";
 import CanvasContainer from "./canvas/CanvasContainer";
 import Upload from "./Upload";
 
 const Container = () => {
   const [container, setContainer] = useState<ContainerType>(DEFAULT_CONTAINER);
-  const [ratio, setRatio] = useState<number>(DEFAULT_RATIO);
   const [image, setImage] = useState<string>(DEFAULT_IMG);
+  const [imageSize, setImageSize] = useState<ImageSizeType>({ width: 400, height: 400 });
 
   const getImageRatio = useCallback(() => {
     const img = new Image();
     img.src = image;
     img.crossOrigin = "anonymous";
     img.onload = () => {
-      setRatio(() => img.height / img.width);
+      setImageSize({ width: img.width, height: img.height });
     };
   }, [image]);
 
@@ -43,7 +43,7 @@ const Container = () => {
         </div>
       </div>
       <div className="w-full flex-1">
-        {container === "css" ? <CssContainer image={image} /> : <CanvasContainer image={image} ratio={ratio} />}
+        {container === "css" ? <CssContainer image={image} /> : <CanvasContainer image={image} imageSize={imageSize} />}
       </div>
       <Upload setImage={setImage} />
     </div>

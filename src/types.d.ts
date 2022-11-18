@@ -19,3 +19,8 @@ export type CanvasFilter = {
   max: number;
   min: number;
 };
+
+export type ImageSizeType = {
+  width: number;
+  height: number;
+};

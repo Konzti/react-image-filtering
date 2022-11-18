@@ -1,34 +1,34 @@
 import { useEffect, useRef, useCallback } from "react";
-import { Application } from "pixi.js";
+import * as PIXI from "pixi.js";
 import { AdjustmentFilter } from "@pixi/filter-adjustment";
 
-import { createApp, createScene } from "./scene/setup";
+import { createRenderer } from "./scene/setup";
 import { useCanvasStore } from "../../store/canvas";
 import { getAdjustmentFilterObject } from "../../utils/utils";
 import AdjustmentFilterContainer from "./AdjustmentFilterContainer";
 import Buttons from "./Buttons";
+import { ICanvas, Container } from "pixi.js";
 
 type CanvasContainerProps = {
   image: string;
-  ratio: number;
+  imageSize: any;
 };
 
-const CanvasContainer = ({ image, ratio }: CanvasContainerProps) => {
+const CanvasContainer = ({ image, imageSize }: CanvasContainerProps) => {
   const filters = useCanvasStore(state => state.filters);
-  const parentRef = useRef<HTMLDivElement | null>(null);
-  const appRef = useRef<Application | null>(null);
-
+  const stageRef = useRef<Container | null>(null);
+  const rendererRef = useRef<PIXI.IRenderer<ICanvas> | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let values = getAdjustmentFilterObject(filters);
   const adjustmentFilter = new AdjustmentFilter(values);
 
-  if (appRef.current) {
-    appRef.current.stage.filters = [adjustmentFilter];
+  if (stageRef.current) {
+    stageRef.current.filters = [adjustmentFilter];
+    rendererRef.current?.render(stageRef.current);
   }
-
   const downloadImage = () => {
-    if (appRef.current) {
-      const dataURL = appRef?.current?.renderer?.view?.toDataURL?.("image/jpeg", 1.0);
-
+    if (rendererRef.current) {
+      const dataURL = rendererRef.current.view.toDataURL?.("image/jpeg", 0.4);
       if (dataURL) {
         const link = document.createElement("a");
         link.download = "image.jpeg";
@@ -39,32 +39,16 @@ const CanvasContainer = ({ image, ratio }: CanvasContainerProps) => {
     } else alert("Cannot download image");
   };
 
-  const createCanvas = useCallback(() => {
-    let app = createApp(parentRef!.current!.offsetWidth, ratio);
-    parentRef.current?.append(app.view as HTMLCanvasElement);
-
-    appRef.current = app;
-    appRef.current.stage.filters = [adjustmentFilter];
-
-    const scene = createScene(app.screen.width, ratio, image);
-    app.stage.addChild(scene);
-
-    return app;
-  }, [image, ratio]);
-
   useEffect(() => {
-    const app = createCanvas();
-
-    return () => {
-      app.stop();
-      app.destroy(true, true);
-    };
-  }, [createCanvas]);
+    createRenderer(imageSize, canvasRef.current!, stageRef, rendererRef, image);
+  }, [image, imageSize, canvasRef, stageRef, rendererRef]);
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-5 flex-1 px-3 py-5">
       <div className="w-full flex flex-col items-center mb-10 md:w-1/2 md:mb-0">
-        <div ref={parentRef} className="w-full max-w-md"></div>
+        <div className="w-full max-w-md">
+          <canvas id="canvas" ref={canvasRef} className="w-full"></canvas>
+        </div>
       </div>
       <div className="w-full flex flex-col items-center justify-around md:w-1/2">
         <AdjustmentFilterContainer />
