@@ -1,5 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
-import * as PIXI from "pixi.js";
+import { useEffect, useRef } from "react";
 import { AdjustmentFilter } from "@pixi/filter-adjustment";
 
 import { createRenderer } from "./scene/setup";
@@ -7,7 +6,7 @@ import { useCanvasStore } from "../../store/canvas";
 import { getAdjustmentFilterObject } from "../../utils/utils";
 import AdjustmentFilterContainer from "./AdjustmentFilterContainer";
 import Buttons from "./Buttons";
-import { ICanvas, Container } from "pixi.js";
+import { ICanvas, Container, IRenderer } from "pixi.js";
 
 type CanvasContainerProps = {
   image: string;
@@ -17,7 +16,7 @@ type CanvasContainerProps = {
 const CanvasContainer = ({ image, imageSize }: CanvasContainerProps) => {
   const filters = useCanvasStore(state => state.filters);
   const stageRef = useRef<Container | null>(null);
-  const rendererRef = useRef<PIXI.IRenderer<ICanvas> | null>(null);
+  const rendererRef = useRef<IRenderer<ICanvas> | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let values = getAdjustmentFilterObject(filters);
   const adjustmentFilter = new AdjustmentFilter(values);
@@ -40,7 +39,7 @@ const CanvasContainer = ({ image, imageSize }: CanvasContainerProps) => {
   };
 
   useEffect(() => {
-    createRenderer(imageSize, canvasRef.current!, stageRef, rendererRef, image);
+    createRenderer(imageSize, canvasRef.current!, stageRef, rendererRef, image, adjustmentFilter);
   }, [image, imageSize, canvasRef, stageRef, rendererRef]);
 
   return (

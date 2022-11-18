@@ -35,10 +35,10 @@ const Container = () => {
             Css
           </button>
           <button
-            className={container === "canvas" ? "btn btn-active" : "btn btn-outline"}
+            className={container === "canvas" ? "btn btn-active capitalize" : "btn btn-outline capitalize"}
             onClick={() => setContainer("canvas")}
           >
-            Pixi (Canvas)
+            WebGL
           </button>
         </div>
       </div>

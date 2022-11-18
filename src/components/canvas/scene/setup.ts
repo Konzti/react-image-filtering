@@ -1,3 +1,4 @@
+import { AdjustmentFilter } from "@pixi/filter-adjustment";
 import { Container, Sprite, autoDetectRenderer, ICanvas, DisplayObject, IRenderer } from "pixi.js";
 
 export const createRenderer = (
@@ -5,7 +6,8 @@ export const createRenderer = (
   canvas: ICanvas,
   stageRef: React.MutableRefObject<Container<DisplayObject> | null>,
   rendererRef: React.MutableRefObject<IRenderer<ICanvas> | null>,
-  image: string
+  image: string,
+  adjustmentFilter: AdjustmentFilter
 ) => {
   let renderer = autoDetectRenderer({
     width: imageSize.width,
@@ -21,6 +23,7 @@ export const createRenderer = (
   sprite.position.set(renderer.screen.width / 2, renderer.screen.height / 2);
 
   stage.addChild(sprite);
+  stage.filters = [adjustmentFilter];
 
   rendererRef.current = renderer;
   stageRef.current = stage;
