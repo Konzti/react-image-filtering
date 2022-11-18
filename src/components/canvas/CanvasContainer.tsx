@@ -43,7 +43,7 @@ const CanvasContainer = ({ image, imageSize }: CanvasContainerProps) => {
   }, [image, imageSize, canvasRef, stageRef, rendererRef]);
 
   return (
-    <div className="flex flex-col md:flex-row items-center gap-5 flex-1 px-3 py-5">
+    <div className="flex flex-col md:flex-row items-center gap-3 flex-1 px-3 py-5">
       <div className="w-full flex flex-col items-center mb-10 md:w-1/2 md:mb-0">
         <div className="w-full max-w-md">
           <canvas id="canvas" ref={canvasRef} className="w-full"></canvas>

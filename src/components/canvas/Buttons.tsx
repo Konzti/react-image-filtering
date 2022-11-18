@@ -7,7 +7,7 @@ type ButtonsProps = {
 const Buttons = ({ downloadImage }: ButtonsProps) => {
   const resetFilters = useCanvasStore(state => state.resetFilters);
   return (
-    <div className="flex justify-center gap-3 mt-3">
+    <div className="flex w-full justify-between gap-3 mt-3 md:justify-center">
       <button className="btn btn-outline" onClick={downloadImage}>
         Download Image
       </button>
