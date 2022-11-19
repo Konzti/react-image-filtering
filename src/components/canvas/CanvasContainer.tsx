@@ -3,7 +3,7 @@ import { AdjustmentFilter } from "@pixi/filter-adjustment";
 
 import { createRenderer } from "./scene/setup";
 import { useCanvasStore } from "../../store/canvas";
-import { getAdjustmentFilterObject } from "../../utils/utils";
+import { downloadImagefromCanvas, getAdjustmentFilterObject } from "../../utils/utils";
 import AdjustmentFilterContainer from "./AdjustmentFilterContainer";
 import Buttons from "./Buttons";
 import { ICanvas, Container, IRenderer } from "pixi.js";
@@ -26,16 +26,9 @@ const CanvasContainer = ({ image, imageSize }: CanvasContainerProps) => {
     rendererRef.current?.render(stageRef.current);
   }
   const downloadImage = () => {
-    if (rendererRef.current) {
-      const dataURL = rendererRef.current.view.toDataURL?.("image/jpeg", 0.4);
-      if (dataURL) {
-        const link = document.createElement("a");
-        link.download = "image.jpeg";
-        link.href = dataURL;
-        link.click();
-        link.remove();
-      }
-    } else alert("Cannot download image");
+    if (rendererRef.current !== null) {
+      downloadImagefromCanvas(rendererRef);
+    }
   };
 
   useEffect(() => {

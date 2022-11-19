@@ -1,5 +1,5 @@
 import create from "zustand";
-import { canvasFilters } from "../filters";
+import { canvasFilters } from "../filters/filters";
 import { CanvasFilter } from "./../types";
 
 interface CanvasState {

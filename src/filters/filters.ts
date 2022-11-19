@@ -1,4 +1,4 @@
-import { CanvasFilter, Filter } from "./types";
+import { CanvasFilter, Filter } from "../types";
 import { filters as pixiFilters } from "pixi.js";
 
 export const filters: Filter[] = [

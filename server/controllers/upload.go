@@ -17,6 +17,7 @@ func UploadController(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	fileName := utils.RandomHex() + ".jpg"
 
 	utils.CheckError(c.SaveUploadedFile(file, constants.Folder+"/"+file.Filename))
@@ -39,4 +40,5 @@ func UploadController(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"imgUrl": resp.SecureURL,
 	})
+
 }

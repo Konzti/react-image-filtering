@@ -4,7 +4,7 @@ import { ContainerType, ImageSizeType } from "../types";
 import { DEFAULT_IMG, DEFAULT_CONTAINER } from "../constants/constants";
 import CssContainer from "./cssContainer/CssContainer";
 import CanvasContainer from "./canvas/CanvasContainer";
-import Upload from "./Upload";
+import Upload from "./upload/Upload";
 
 const Container = () => {
   const [container, setContainer] = useState<ContainerType>(DEFAULT_CONTAINER);

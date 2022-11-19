@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
-import { UPLOAD_ENDPOINT } from "../constants/constants";
+import { MAX_FILE_SIZE, UPLOAD_ENDPOINT } from "../constants/constants";
 import { client } from "./client";
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [uploaded, setUploaded] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
   const uploadImage = async (file: File): Promise<string | void> => {
@@ -20,12 +20,15 @@ export const useHttp = () => {
         withCredentials: true,
       });
       if (res.status === 200) {
+        setError(null);
         setUploaded(true);
         return res.data.imgUrl as string;
       } else {
         setUploaded(false);
+        setError("Upload failed");
       }
     } catch (err) {
+      setError("Cannot reach server");
       console.error(err);
       setUploaded(false);
     } finally {
@@ -36,10 +39,17 @@ export const useHttp = () => {
     if (!target.files) {
       return;
     }
-    setFile(target.files[0]);
+    const file = target.files[0];
+    console.log("File size: ", file.size);
+    if (file.size > MAX_FILE_SIZE) {
+      setError("max file size is 3MB");
+      return;
+    }
+    setError(null);
+    setFile(file);
     setUploaded(false);
   };
   const clearError = useCallback(() => setError(null), []);
 
-  return {loading, uploadImage, uploaded,file, fileHandler};
+  return { loading, uploadImage, uploaded, file, error, fileHandler };
 };

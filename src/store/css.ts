@@ -1,5 +1,5 @@
 import create from "zustand";
-import { filters as initialFilters } from "./../filters";
+import { filters as initialFilters } from "../filters/filters";
 import { Filter } from "./../types";
 
 interface CssState {

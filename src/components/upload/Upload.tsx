@@ -1,7 +1,9 @@
-import { useHttp } from "../axios/useHttp";
+import { useHttp } from "../../axios/useHttp";
+import ErrorModal from "./ErrorModal";
+import Spinner from "./Spinner";
 
 const Upload = ({ setImage }: any) => {
-  const { loading, uploadImage, uploaded, file, fileHandler } = useHttp();
+  const { loading, uploadImage, uploaded, file, error, fileHandler } = useHttp();
 
   const handleUploadClick = async () => {
     if (file === null) {
@@ -26,7 +28,8 @@ const Upload = ({ setImage }: any) => {
             Upload
           </button>
         )}
-        {loading ? <p>Loading....</p> : null}
+        {loading ? <Spinner /> : null}
+        {error ? <ErrorModal error={error} /> : null}
         <input
           className="file-input file-input-bordered file-input-primary mt-3"
           type="file"
