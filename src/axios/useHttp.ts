@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { MAX_FILE_SIZE, UPLOAD_ENDPOINT } from "../constants/constants";
 import { client } from "./client";
 
@@ -35,21 +35,25 @@ export const useHttp = () => {
       setLoading(false);
     }
   };
+
   const fileHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     if (!target.files) {
       return;
     }
-    const file = target.files[0];
-    console.log("File size: ", file.size);
-    if (file.size > MAX_FILE_SIZE) {
+    const selectedFile = target.files[0];
+    
+    if (selectedFile === file) {
+      setError("File already selected");
+      return;
+    }
+    if (selectedFile.size > MAX_FILE_SIZE) {
       setError("max file size is 3MB");
       return;
     }
     setError(null);
-    setFile(file);
+    setFile(selectedFile);
     setUploaded(false);
   };
-  const clearError = useCallback(() => setError(null), []);
 
   return { loading, uploadImage, uploaded, file, error, fileHandler };
 };

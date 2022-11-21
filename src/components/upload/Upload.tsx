@@ -20,11 +20,11 @@ const Upload = ({ setImage }: any) => {
       <h1 className="text-3xl font-bold text-center py-5"></h1>
       <div className="form-control flex flex-col items-center justify-center">
         {file === null || uploaded ? (
-          <label htmlFor="upload" className="label text-xl text-center" title="upload image">
+          <label htmlFor="upload" role="chooseImage" className="label text-xl text-center" title="upload image">
             choose image
           </label>
         ) : (
-          <button className="btn btn-primary" onClick={handleUploadClick}>
+          <button className="btn btn-primary" role="uploadButton" onClick={handleUploadClick}>
             Upload
           </button>
         )}
@@ -32,6 +32,7 @@ const Upload = ({ setImage }: any) => {
         {error ? <ErrorModal error={error} /> : null}
         <input
           className="file-input file-input-bordered file-input-primary mt-3"
+          role="fileInput"
           type="file"
           accept="image/png, image/gif, image/jpeg"
           name="upload"
